@@ -10,4 +10,4 @@ export function getRandomNumberInclusive(min=0, max=1) {
   return Math.random() * (maxFloored - minCeiled) + minCeiled;
 }
 
-console.log(getRandomIntInclusive(0,5))
+// console.log(getRandomIntInclusive(0,5))

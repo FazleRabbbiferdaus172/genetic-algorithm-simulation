@@ -5,4 +5,4 @@ export default function randomCharacter() {
     return String.fromCharCode(c)
 }
 
-console.log(randomCharacter())
+// console.log(randomCharacter())
