@@ -1,16 +1,22 @@
 import { getRandomIntInclusive } from "./utils/randomInt.mjs"
 
-class MatingPool{
-    constructor () {
+export default class MatingPool{
+    constructor (parents) {
         this.pool = []
-        this.parents = []
+        this.parents = parents
     }
 
     generatePool() {
+        if (this.parents === 0) throw new Error("No parents")
         for (const p of this.parents) {
+            if (Math.floor(p.fitness*100) === 0) {
+                this.pool.push(p)
+            } 
+            else {
             for (let i = 0; i < Math.floor(p.fitness*100); i++) {
                 this.pool.push(p)
             }
+        }
         }        
     }
 
