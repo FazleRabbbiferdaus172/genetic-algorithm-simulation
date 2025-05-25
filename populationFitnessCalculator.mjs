@@ -5,10 +5,10 @@ export default class FitnessCalculator {
 
     getFitness(model) {
         let fitness = 0
-        for (let i = 0; i < this.target.lenght; i++) {
-            if (model.genes[i] === this.target[i]) fitness++
+        for (let i = 0; i < this.target.length; i++) {
+            if (model.gense[i] === this.target[i]) fitness++
         }
 
-        return fitness/this.target.lenght
+        return fitness/this.target.length
     }
 }
