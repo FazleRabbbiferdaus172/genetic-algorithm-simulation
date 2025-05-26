@@ -5,7 +5,7 @@ import MatingPool from "./matingPool.mjs"
 let mutationRate = 0.01
 let populationSize = 100
 let population = []
-const target = "faris al mahmud"
+const target = "Faris Al Mahmud"
 const DnaLength = target.length
 
 DNA.mutationRate = mutationRate
@@ -51,9 +51,20 @@ function findTheBestFit () {
 
 setup()
 
+let main_div = document.getElementById('main-div');
+
+if (main_div === null) {
+    main_div = document.createElement("div");
+    main_div.id = 'main-div';
+    document.body.appendChild(main_div);
+}
+
 while (true) {
     evaluatePulationFitness()
     let bestFit = findTheBestFit()
+    const h3 = document.createElement("h3");
+    h3.innerHTML = bestFit.gense.join("");
+    main_div.appendChild(h3);
     console.log(bestFit.gense)
     if (bestFit.fitness == 1) {
         break
