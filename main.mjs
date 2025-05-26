@@ -48,12 +48,6 @@ function findTheBestFit () {
     return result
 }
 
-function doBreak() {
-    for (const p of population) {
-        if(p.gense[0] == 'o' && p.gense[1] == 'k') {console.log(`found you ${p.gense} with fitness ${p.fitness}`);return true}
-    }
-    return false
-}
 
 setup()
 
