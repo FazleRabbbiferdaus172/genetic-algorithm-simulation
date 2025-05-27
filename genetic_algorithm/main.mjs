@@ -5,6 +5,7 @@ import MatingPool from "./matingPool.mjs"
 let mutationRate = 0.01
 let populationSize = 100
 let population = []
+let pool = []
 const target = "Faris Al Mahmud"
 const DnaLength = target.length
 
@@ -49,27 +50,34 @@ function findTheBestFit () {
 }
 
 
-setup()
+function runStep(population=[], pool=[]) {
+    if (population.length === 0) {
+        setup()
+    }
+    evaluatePulationFitness()
+    let bestFit = findTheBestFit()
+    if (bestFit.fitness == 1) {
+        return {end: true, bestFit: bestFit, population: population, pool: pool}
+    }
+    else {
+        pool = new MatingPool(population)
+        fillWithNewPopulation(pool)
+        return {end: false, bestFit: bestFit, population: population, pool: pool}
+    }
 
-let main_div = document.getElementById('main-div');
-
-if (main_div === null) {
-    main_div = document.createElement("div");
-    main_div.id = 'main-div';
-    document.body.appendChild(main_div);
 }
 
 while (true) {
-    evaluatePulationFitness()
-    let bestFit = findTheBestFit()
-    const h3 = document.createElement("h3");
-    h3.innerHTML = bestFit.gense.join("");
-    main_div.appendChild(h3);
-    console.log(bestFit.gense)
-    if (bestFit.fitness == 1) {
+    let state = runStep(population, pool)
+    population = state.population
+    pool = state.pool
+    console.log(state.bestFit.gense)
+    if (state.end) {
         break
     }
-    // if (doBreak()) break
-    let pool = new MatingPool(population)
-    fillWithNewPopulation(pool)
 }
+
+
+// const GeneticAlgorithm = {
+
+// }
