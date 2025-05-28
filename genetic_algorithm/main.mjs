@@ -3,7 +3,7 @@ import FitnessCalculator from "./populationFitnessCalculator.mjs"
 import MatingPool from "./matingPool.mjs"
 
 
-class GeneticAlgorithm {
+export class GeneticAlgorithm {
     constructor(target = "For Farish Al Mahmud, My first born", populationSize = 5000, mutationRate = 0.01, ) {
         this.target = target
         this.DnaLength = target.length
@@ -73,6 +73,14 @@ class GeneticAlgorithm {
         }
     }
 
+    bestFitStr() {
+        return this.bestFit?.gense.join("") ?? "n/a"
+    }
+
+    populationStr() {
+        return this.population.map(p => p.gense.join(""))
+    }
+
 }
 
 // const gs = new GeneticAlgorithm()
@@ -80,5 +88,5 @@ class GeneticAlgorithm {
 
 // while (gs.end===false) {
 //     gs.runStep()
-//     console.log(gs.bestFit.gense)
+//     console.log(gs.bestFitStr())
 // }
