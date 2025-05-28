@@ -4,7 +4,7 @@ import MatingPool from "./matingPool.mjs"
 
 
 class GeneticAlgorithm {
-    constructor(target = "Farish Al Mahmud", populationSize = 100, mutationRate = 0.01, ) {
+    constructor(target = "For Farish Al Mahmud, My first born", populationSize = 5000, mutationRate = 0.01, ) {
         this.target = target
         this.DnaLength = target.length
         this.fitnessCalculator = new FitnessCalculator(target)
