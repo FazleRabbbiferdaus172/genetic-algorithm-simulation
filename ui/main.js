@@ -13,7 +13,7 @@ class GridCell extends Component {
 
 class ScreenSection extends Component {
     static template = xml`
-        <section class="hero is-success is-halfheight">
+        <section class="hero is-fullheight is-success" style="max-height: 50vh; overflow: auto">
             <div class="hero-body">
                     <t t-slot="default"/>         
             </div>
@@ -24,30 +24,31 @@ class ScreenSection extends Component {
 class MainComponent extends Component {
     timeData = useState({value: 0})
     ga = new GeneticAlgorithm() 
-    state = useState({bestFit: this.ga.bestFitStr(), interation: this.ga.itteration, population: this.ga.populationStr()})
+    state = useState({"itterations": [{bestFit: this.ga.bestFitStr(), interation: this.ga.itteration, population: this.ga.populationStr()}]})
     runNext = useState({step: 0})
+    re = useState({step: 0})
 
     setup() {
         this.ga.setup()
+
         useEffect(() => {
-            const timer = setInterval(() => {
-                if (this.ga.end === false) {
+            let result = []
+            while (this.ga.end===false){
                     this.ga.runStep()
-                    this.state.bestFit = this.ga.bestFitStr(), 
-                    this.state.interation = this.ga.itteration
-                    this.state.population = this.ga.populationStr()
-                    // console.log(this.ga)
-                    console.log(this.state)
-                }
-            }, 30)
-        
-            return () => clearInterval(timer)
-          }, 
-        () => [])
+                    // this.state.bestFit = this.ga.bestFitStr(), 
+                    // this.state.interation = this.ga.itteration
+                    // this.state.population = this.ga.populationStr()
+                    result.push({bestFit: this.ga.bestFitStr(), interation: this.ga.itteration, population: this.ga.populationStr()})
+            }
+            this.state.itterations = result
+          }, () => [this.runNext, this.re])
+
         onPatched(() => {
-            console.log("I patched")
-            this.runNext.step += 1
-        });
+            if (this.runNext.step < this.state.itterations.length - 1){            
+                this.runNext.step += 1
+            }
+            this.re.step += 1
+        })
     }
 
     static template = xml`
@@ -55,16 +56,29 @@ class MainComponent extends Component {
                             <div class="grid">
                                 <GridCell>
                                     <ScreenSection>
-                                        <h1 t-esc="state.bestFit"/>
+                                        <h1 t-esc="state.itterations[runNext.step].bestFit"/>
                                     </ScreenSection>
                                 </GridCell>
                                 <GridCell>
                                     <ScreenSection>
-                                        <div class="fixed-grid has-6-cols">
-                                            <div class="grid">
 
+                                            <div class="grid is-col-min-30">
+                                                <t t-foreach="state.itterations[runNext.step].population" t-as="p" t-key="p">
+                                                    <GridCell>
+                                                        <t t-esc="p"/>
+                                                    </GridCell>
+                                                </t>
+                                                <GridCell>
+                                                    <p>...</p>
+                                                </GridCell>
+                                                <GridCell>
+                                                    <p>...</p>
+                                                </GridCell>
+                                                <GridCell>
+                                                    <p>...</p>
+                                                </GridCell>
                                             </div>
-                                        </div>
+
                                     </ScreenSection>
                                 </GridCell>
                             </div>
