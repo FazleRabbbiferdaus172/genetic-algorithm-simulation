@@ -65,6 +65,7 @@ export class GeneticAlgorithm {
         this.evaluatePulationFitness()
         this.bestFit = this.findTheBestFit()
         if (this.bestFit.fitness == 1) {
+            // todo: if fitness stays same for past few itterations either terminate of increase population size
             this.end = true
         }
         else {
@@ -78,7 +79,8 @@ export class GeneticAlgorithm {
     }
 
     populationStr() {
-        return this.population.map(p => p.gense.join(""))
+        let p = this.population.map(p => p.gense.join(""))
+        return p.slice(0,50)
     }
 
 }
