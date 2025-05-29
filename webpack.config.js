@@ -18,7 +18,8 @@ module.exports = {
       },
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'Genetic algorithm simulation'
+            title: 'Genetic algorithm simulation',
+            template: "index.html",
         }),
     ]
 }
