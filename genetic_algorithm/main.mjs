@@ -4,7 +4,7 @@ import MatingPool from "./matingPool.mjs"
 
 
 export class GeneticAlgorithm {
-    constructor(target = "For Farish Al Mahmud, My first born", populationSize = 5000, mutationRate = 0.01, ) {
+    constructor(target = "For Farish Al Mahmud, My first born", populationSize = 5000, mutationRate = 0.01, maxItterationTollarate=100) {
         this.target = target
         this.DnaLength = target.length
         this.fitnessCalculator = new FitnessCalculator(target)
@@ -16,6 +16,22 @@ export class GeneticAlgorithm {
         this.end = false
         this.itteration = 0
         this.bestFit = undefined
+        this.bestFitRateList = []
+        this.maxItterationTollarate = maxItterationTollarate
+    }
+
+    pushToBestFitRateList(bestFitRate) {
+        if (this.bestFitRateList.length === this.maxItterationTollarate) {
+            this.bestFitRateList.shift()
+        }
+        this.bestFitRateList.push(bestFitRate)
+    }
+
+    isBestFitUnchanged() {
+        if (this.bestFitRateList.length < this.maxItterationTollarate) return false
+        const bestFitRateSet = new Set(this.bestFitRateList)
+        if (bestFitRateSet.size !== 1) return false
+        return true
     }
 
     setup() {
@@ -54,6 +70,7 @@ export class GeneticAlgorithm {
                 result = p
             }
         }
+        this.pushToBestFitRateList(currentFitness)
         return result
     }
 
