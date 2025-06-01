@@ -1,0 +1,1 @@
+this a similation of genetic algorithm, the ui is made with @odoo/owl
